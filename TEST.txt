@@ -3,3 +3,5 @@ Ilya Aronov
 Brian Atkinson
 
 We are working on Leap Motion
+
+And setting up GitHub
