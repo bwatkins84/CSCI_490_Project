@@ -5,6 +5,8 @@
     <script>
       var pausedFrame = null;
       var latestFrame = null;
+
+      // pause the Frame
       window.onkeypress = function(e) {
         if (e.charCode == 32) {
           if (pausedFrame == null) {
@@ -15,10 +17,29 @@
         }
       };
 
+      // Controller Listener
       var controller = new Leap.Controller({enableGestures: true});
       controller.loop(function(frame) {
-        latestFrame = frame;
-        document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
+          latestFrame = frame;
+          var fingerCount = (pausedFrame || latestFrame).pointables.length;
+          var symbol = null;
+
+          switch(fingerCount) {
+              case 0:
+                  symbol = "Rock";
+                  break;
+              case 1:
+              case 2:
+              case 3:
+                  symbol = "Scissors";
+                  break;
+              default:
+                  symbol = "Paper";
+                  break;
+          };
+
+          // display to screen
+          document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+symbol+"</div>";
       });
 
       controller.on('ready', function() {
@@ -45,7 +66,7 @@
     </script>
   </head>
   <body>
-    <h2>This is the body of the page</h2>
+    <h2>What is Held Up:</h2>
     <div id="out"></div>
     <div id="log"></div>
   </body>
