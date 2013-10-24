@@ -14,11 +14,13 @@
           }
         }
       };
+
       var controller = new Leap.Controller({enableGestures: true});
       controller.loop(function(frame) {
         latestFrame = frame;
         document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
       });
+
       controller.on('ready', function() {
           console.log("ready");
       });
@@ -43,6 +45,7 @@
     </script>
   </head>
   <body>
+    <h2>This is the body of the page</h2>
     <div id="out"></div>
     <div id="log"></div>
   </body>
