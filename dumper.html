@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Dumper - Leap</title>
+    <title>Rock-Scissors-Paper</title>
     <script src="script/leap.js"></script>
     <script>
       var pausedFrame = null;
@@ -19,7 +19,8 @@
 
       // Controller Listener
       var controller = new Leap.Controller({enableGestures: true});
-      controller.loop(function(frame) {
+
+      Leap.loop(function(frame) {
           latestFrame = frame;
           var fingerCount = (pausedFrame || latestFrame).pointables.length;
           var symbol = null;
@@ -38,6 +39,7 @@
                   break;
           };
 
+
           // display to screen
           document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+symbol+"</div>";
       });
@@ -47,6 +49,7 @@
       });
       controller.on('connect', function() {
           console.log("connect");
+
       });
       controller.on('disconnect', function() {
           console.log("disconnect");
