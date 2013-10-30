@@ -1,9 +1,0 @@
-Team Members:
-Ilya
-Brian
-
-Hardware:
-Leap Motion
-
-Version:
-0.0.0.0
