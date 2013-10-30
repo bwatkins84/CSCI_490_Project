@@ -16,11 +16,18 @@ class HomeController extends BaseController {
 	*/
 
 	public function showWelcome() {
-		return View::make('hello');
+		return View::make('mainMenu');
 	}
 
     public function scoreBoard() {
-        return Board::all();
+        // get the top score list
+        $topScores = Board::all();
+
+        // pass the top score list into the scoreBoard view
+        return View::make('scoreBoard')
+            ->with(array(
+                'topScores' => $topScores
+            ));
     }
 
     public function play() {

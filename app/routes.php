@@ -11,8 +11,12 @@
 |
 */
 
+// routes for the main page
 Route::get('/', 'HomeController@showWelcome');
+Route::get('/home', 'HomeController@showWelcome');
 
-Route::get('/scoreboard.php', 'HomeController@scoreBoard');
+// routes for the score board
+Route::get('/scoreboard', 'HomeController@scoreBoard');
 
-Route::get('/play.php', 'HomeController@play');
+// routes to play the game
+Route::get('/play', 'HomeController@play');
