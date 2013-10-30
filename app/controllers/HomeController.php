@@ -21,8 +21,10 @@ class HomeController extends BaseController {
 
     public function scoreBoard() {
         // get the top score list
-        $topScores = Board::all();
-
+        $topScores = DB::table('board')
+            ->orderBy('score', 'desc')
+            ->get();
+        
         // pass the top score list into the scoreBoard view
         return View::make('scoreBoard')
             ->with(array(

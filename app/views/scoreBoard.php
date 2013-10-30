@@ -41,11 +41,11 @@
                 echo<<<USER
             <tr>
                 <td>{$counter}</td>
-                <td>{$user['score']}</td>
-                <td>{$user['name']}</td>
+                <td>{$user->score}</td>
+                <td>{$user->name}</td>
             </tr>
 USER;
-
+                $counter++;
             }
         ?>
     </table>
