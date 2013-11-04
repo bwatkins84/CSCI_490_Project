@@ -10,6 +10,7 @@
 
     <title>Main Menu</title>
 
+    <script src="../app/script/jquery-1.10.2.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 

@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'csci490',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => 'csci490',       // test
+			'username'  => 'root',          // csci203s2012
+			'password'  => '',              // csci203s2012
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

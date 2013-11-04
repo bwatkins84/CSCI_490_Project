@@ -16,7 +16,9 @@ Route::get('/', 'HomeController@showWelcome');
 Route::get('/home', 'HomeController@showWelcome');
 
 // routes for the score board
-Route::get('/scoreboard', 'HomeController@scoreBoard');
+Route::get('/scoreboard', 'ScoreBoardController@getScores');
+// for ajax call
+Route::get('/scoreboard/addscore', 'ScoreBoardController@storeScore');
 
 // routes to play the game
 Route::get('/play', 'HomeController@play');

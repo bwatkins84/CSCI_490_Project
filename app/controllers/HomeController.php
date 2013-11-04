@@ -16,23 +16,16 @@ class HomeController extends BaseController {
 	*/
 
 	public function showWelcome() {
+
+        // get ip
+        //return $_SERVER['REMOTE_ADDR'];
+
 		return View::make('mainMenu');
 	}
-
-    public function scoreBoard() {
-        // get the top score list
-        $topScores = DB::table('board')
-            ->orderBy('score', 'desc')
-            ->get();
-        
-        // pass the top score list into the scoreBoard view
-        return View::make('scoreBoard')
-            ->with(array(
-                'topScores' => $topScores
-            ));
-    }
 
     public function play() {
         return "playing";
     }
+
+
 }

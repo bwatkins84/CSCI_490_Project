@@ -10,6 +10,7 @@
 
     <title>Score Board</title>
 
+    <script src="../app/script/jquery-1.10.2.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
@@ -20,6 +21,7 @@
     <!--[if lt IE 9]>
     <script src="../bootstrap/assets/js/html5shiv.js"></script>
     <script src="../bootstrap/assets/js/respond.min.js"></script>
+    <script src="../app/script/jquery-1.10.2.js"></script>
     <![endif]-->
 </head>
 
@@ -30,7 +32,7 @@
     <h1 class="text-center">Score Board</h1>
 
     <table class="table">
-        <th>#</th>
+        <th>Rank</th>
         <th>Score</th>
         <th>Name</th>
 
