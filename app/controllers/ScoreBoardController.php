@@ -50,7 +50,8 @@ class ScoreBoardController extends BaseController {
         // create new row
         $newScore = Board::create(array(
                 'name' => $name,
-                'score' => $score
+                'score' => $score,
+                'ip_address' => $_SERVER['REMOTE_ADDR']
             ));
 
         return Response::json($newScore);

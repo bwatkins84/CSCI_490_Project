@@ -24,7 +24,7 @@ class HomeController extends BaseController {
 	}
 
     public function play() {
-        return "playing";
+        return View::make('play');
     }
 
 
