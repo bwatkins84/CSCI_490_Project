@@ -1,47 +1,45 @@
+<!DOCTYPE HTML>
 <html>
   <head>
     <title>Rock-Scissors-Paper</title>
     <script src="script/leap.js"></script>
+    <script src="script/rock_paper_scissors.js"></script>
     <script>
-      var pausedFrame = null;
-      var latestFrame = null;
 
-      // pause the Frame
-      window.onkeypress = function(e) {
-        if (e.charCode == 32) {
-          if (pausedFrame == null) {
-            pausedFrame = latestFrame;
-          } else {
-            pausedFrame = null;
-          }
+        /*var pausedFrame = null;
+        var latestFrame = null;
+
+        // pause the Frame
+        window.onkeypress = function(e) {
+            if (e.charCode == 32) {
+                if (pausedFrame == null) {
+                    pausedFrame = latestFrame;
+                } else {
+                    pausedFrame = null;
+                }
+            }
+        };
+
+        Leap.loop(function(frame) {
+        latestFrame = frame;
+        var fingerCount = (pausedFrame || latestFrame).pointables.length;
+        //var CurrentHand = new Hand(pausedFrame || latestFrame);
+        var symbol = null;
+
+
+        if(fingerCount == 4){
+            symbol = "Paper";
         }
-      };
-
-      // Controller Listener
-      var controller = new Leap.Controller({enableGestures: true});
-
-      Leap.loop(function(frame) {
-          latestFrame = frame;
-          var fingerCount = (pausedFrame || latestFrame).pointables.length;
-          var symbol = null;
-
-          switch(fingerCount) {
-              case 0:
-                  symbol = "Rock";
-                  break;
-              case 1:
-              case 2:
-              case 3:
-                  symbol = "Scissors";
-                  break;
-              default:
-                  symbol = "Paper";
-                  break;
-          };
+        else if(fingerCount == 2){
+            symbol = "Scissors";
+        }
+        else{
+            symbol = "Rock";
+        }
 
 
-          // display to screen
-          document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+symbol+"</div>";
+        // display to screen
+        document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+symbol+"</div>";
       });
 
       controller.on('ready', function() {
@@ -65,12 +63,14 @@
       });
       controller.on('deviceDisconnected', function() {
           console.log("deviceDisconnected");
-      });
+      });*/
     </script>
   </head>
   <body>
     <h2>What is Held Up:</h2>
     <div id="out"></div>
-    <div id="log"></div>
+    <div id="out2"></div>
+    <input type='button' value='Play Game' onclick='StartGame()'>
+    <div id='log'></div>
   </body>
 </html>
