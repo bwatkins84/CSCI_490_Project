@@ -1,84 +1,74 @@
-var Time = 3;
-var Timer;
 var controller = new Leap.Controller({enableGestures:true});
+var CurrentFrame;
 
-function StartGame(){
-    document.getElementById('out').innerHTML = "<div>" + "Get ready to play" + "</div>";
-    Timer = setInterval("CountDownDisplay()", 1000);
-}
 
-function CountDownDisplay(){
-    document.getElementById('out2').innerHTML = "<div>" + Time + "</div>";
-    if(Time <= 0){
-        clearInterval(Timer);
-        GetFingerCount();
-    }
-    Time = Time - 1;
-}
+controller.loop(function(frame){
+   CurrentFrame = frame;
+});
 
+/**
+ * @return {number}
+ */
 function GetFingerCount(){
-    Time = 3;
-    var fingerCount;
-    var symbol = null;
+    var fingerCount = 0;
 
     document.getElementById('out2').innerHTML = "<div>" + "Shot!" + "</div>";
+    //while(!HandPresent()){
+      //  document.getElementById('out').innerHTML = "<div>" + "Place Hand Over Leap Motion" + "</div>";
+    //}
 
-    var CurrentFrame = Leap.Frame();
-    alert(CurrentFrame.dump());
-    /*
-    fingerCount = CurrentFrame.pointables.length;
+    CurrentFingers = CurrentFrame.pointables.length;
 
-    var pausedFrame = null;
-    var latestFrame = null;
-
-        // pause the Frame
-        window.onkeypress = function(e) {
-            if (e.charCode == 32) {
-                if (pausedFrame == null) {
-                    pausedFrame = latestFrame;
-                } else {
-                    pausedFrame = null;
-                }
-            }
-        };
-
-        Leap.loop(function(frame) {
-        latestFrame = frame;
-        fingerCount = (pausedFrame || latestFrame).pointables.length;
-        //var CurrentHand = new Hand(pausedFrame || latestFrame);
-
-        if(fingerCount == 4){
-            symbol = "Paper";
-            return;
-        }
-        else if(fingerCount == 2){
-            symbol = "Scissors";
-            return;
-        }
-        else{
-            symbol =  "Rock";
-            return;
-        }
-
-    });
-
-    /*if(fingerCount == 4){
-         symbol = "Paper";
-     }
-     else if(fingerCount == 2){
-         symbol = "Scissors";
-     }
-     else{
-         symbol = "Rock";
-     }
-
-    document.getElementById('out').innerHTML = "<div>" + fingerCount + "</div>";
-//    StartGame();*/
+    if(CurrentFingers == 2){
+        fingerCount = 2;
+        Symbol = "Scissors";
+                //return;
+    }
+    else if(CurrentFingers == 4){
+        fingerCount = 4;
+        Symbol = "Paper";
+                //return;
+    }
+    else{
+        fingerCount = 0;
+        Symbol = "Rock";
+    }
+    document.getElementById('out').innerHTML = "<div>" + "FingerCount: " + fingerCount + " Thrown: "+ Symbol +"</div>";
+    return fingerCount;
 }
 
-controller.loop(function(frame) {
-   latestFrame = frame;
-});
+/**
+ * @return {boolean}
+ */
+function HandPresent(){
+    if(CurrentFrame.hands.length != 0){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @return {boolean}
+ */
+function PlayAgain(){
+    var Continue = false;
+    document.getElementById('out2').innerHTML = "<div>" + "Swipe to play again." + "</div>";
+    document.getElementById('out3').innerHTML = "<div>" + "" + "</div>";
+    if(CurrentFrame.gestures.length > 0){
+        var CurrentGesture = CurrentFrame.gestures[0].type;
+        switch(CurrentGesture){
+            case 'swipe':
+                document.getElementById('out3').innerHTML = "<div>" + "Swipe Detected." + "</div>";
+                Continue = true;
+                break;
+            default:
+                //Continue = false;
+        }
+        return Continue;
+    }
+    return Continue;
+}
+
 controller.on('ready', function() {
          console.log("ready");
 });
