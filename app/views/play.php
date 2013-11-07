@@ -10,6 +10,7 @@
     <title>Main Menu</title>
 
     <script src="../app/script/jquery-1.10.2.js"></script>
+    <script src="../script/leap.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
@@ -25,6 +26,9 @@
     <script type="text/javascript">
         function submitScore() {
             alert('clicked');
+            // make form dialog
+
+            // submit name && score to ajax
         }
 
     </script>

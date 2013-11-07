@@ -1,6 +1,6 @@
+// variables
 var controller = new Leap.Controller({enableGestures:true});
 var CurrentFrame;
-
 
 controller.loop(function(frame){
    CurrentFrame = frame;
@@ -9,7 +9,7 @@ controller.loop(function(frame){
 /**
  * @return {number}
  */
-function GetFingerCount(){
+function getFingerCount(){
     var fingerCount = 0;
 
     document.getElementById('out2').innerHTML = "<div>" + "Shot!" + "</div>";
@@ -40,7 +40,7 @@ function GetFingerCount(){
 /**
  * @return {boolean}
  */
-function HandPresent(){
+function handPresent(){
     if(CurrentFrame.hands.length != 0){
         return true;
     }
@@ -50,7 +50,7 @@ function HandPresent(){
 /**
  * @return {boolean}
  */
-function PlayAgain(){
+function playAgain(){
     var Continue = false;
     document.getElementById('out2').innerHTML = "<div>" + "Swipe to play again." + "</div>";
     document.getElementById('out3').innerHTML = "<div>" + "" + "</div>";
@@ -69,6 +69,9 @@ function PlayAgain(){
     return Continue;
 }
 
+/*
+    controller configurations?
+ */
 controller.on('ready', function() {
          console.log("ready");
 });
@@ -90,3 +93,58 @@ controller.on('deviceConnected', function() {
 controller.on('deviceDisconnected', function() {
     console.log("deviceDisconnected");
 });
+
+// function to play the game
+function playGame() {
+    // game variables
+    var winCount = 0;
+    var fingerCount;
+    var win = true;
+
+    // game - when win
+    while (win) {
+        while(true) {
+            // if hand is present
+                // clear INNER HTML
+
+                // fingerCount = getFingerCount();
+                // generate random number
+                // compare number to fingers
+                // determine win/loss
+
+                // if win
+                    // winCount++
+                    // win = true
+                // else loss
+                    // win = false
+                    // break while(true)
+
+            // if hand NOT present
+                // prompt message -- inner HTML
+        }
+    }
+
+    // game - when loss ...
+
+    // prompt for user name
+    // call web service to store game info $.AJAX
+
+    /*
+        example of possible AJAX call to webservice
+
+    $.ajax({
+        method: "post",
+        url: "something/something.php",
+        data: {
+            name: "string name",
+            winCount: winCount
+        }
+    }).fail(function(){
+
+    }).success(function(data){
+
+    });
+    */
+
+
+}
