@@ -171,7 +171,7 @@ controller.on('deviceDisconnected', function() {
  * @return {number}
  */
 function GetComputerSelection(){
-    var ComputersSelection = Math.floor((Math.random() * 3 + 1));
+    var ComputersSelection = Math.floor((Math.random() * 2 + 1));
     if(ComputersSelection == 0){
         return Thrown.Rock;
     }
