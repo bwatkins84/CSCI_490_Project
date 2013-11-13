@@ -1,5 +1,6 @@
 // variables
 var Thrown = {"Rock":0, "Scissors":1, "Paper":2};
+var ThrownSelection = ["Rock","Scissors","Paper"];
 var controller = new Leap.Controller({enableGestures:true});
 var CurrentFrame;
 var CurrentGesture;
@@ -33,8 +34,8 @@ function KeepBusyThreeSeconds(){
     var TheOffset = Seconds + 3000;
     var KeepGoing = true;
 
+    document.getElementById('out').innerHTML = "<div>" + "3..2..1.." + "</div>";
     while(KeepGoing){
-            document.getElementById('out').innerHTML = "<div>" + "3..2..1.." + "</div>";
             Seconds = GetCurrentTime();
             if(Seconds <= TheOffset){
                 KeepGoing = true;
@@ -115,7 +116,7 @@ function WantToPlayAgain(){
  */
 function getGesture(){
     //Checking to make sure a hand is in the frame
-    if(handPresent()){
+    if(HandPresent()){
         if(CurrentFrame.gestures.length > 0){
             CurrentGesture = CurrentFrame.gestures[0].type;
             if(CurrentGesture == 'swipe'){
@@ -171,7 +172,8 @@ controller.on('deviceDisconnected', function() {
  * @return {number}
  */
 function GetComputerSelection(){
-    var ComputersSelection = Math.floor((Math.random() * 2 + 1));
+    var ComputersSelection = Math.floor((Math.random() * 10 + 1)) % 3;
+
     if(ComputersSelection == 0){
         return Thrown.Rock;
     }
@@ -229,13 +231,12 @@ function playGame() {
     var winCount = 0;
     var PlayersSelection;
     var ComputerSelection;
-    var GameGoing = true;
     var win = true;
 
     // game - when win
     while (win) {
-        while(GameGoing) {
-            KeepBusyThreeSeconds();
+        while(true) {
+            KeepBusyThreeSeconds(); //This needs to be a counter
             if(HandPresent()){
                 // Hand Present, Clearing Inner HTML
                 document.getElementById('out3').innerHTML = "<div>" + "" + "</div>";
@@ -246,18 +247,23 @@ function playGame() {
                     // Player has Won
                     winCount++;
                     win = true;
-                    GameGoing = false;
+                    document.getElementById('out3').innerHTML = "<div>" + " Player1 Wins! Player1 Threw: " + ThrownSelection[PlayersSelection] +
+                                                                " Player2 Threw: " + ThrownSelection[ComputerSelection] + "</div>";
+                    //If can get Gesture Thing working it goes here
+                    break;
                 }
                 else{
                     // Player has Lost
-                    GameGoing = false;
                     win = false;
+                    document.getElementById('out3').innerHTML = "<div>" + " Player1 Loses. Player1 Threw: " + ThrownSelection[PlayersSelection] +
+                                                                " Player2 Threw: " + ThrownSelection[ComputerSelection] + "</div>";
+                    //If can get Gesture Thing working it goes here
+                    break;
                 }
             }
             else{
                 // Hand Not Detected
                 document.getElementById('out3').innerHTML = "<div>" + "Keep Hand Over Leap Motion to Throw Rock, Paper, or Scissors" + "</div>";
-                GameGoing = true;
             }
         }
     }
