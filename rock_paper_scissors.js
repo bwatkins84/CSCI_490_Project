@@ -10,6 +10,27 @@ controller.loop(function(frame){
 });
 
 
+// Takes a string and puts it to the 'out' dive in the_game.php
+// This works
+function Printer(the_string){
+    document.getElementById('out').innerHTML = "<div>" + the_string + "</div>";
+}
+
+// Takes a number, if it is positive, returns the number else returns 0
+// This has a syntax issues with the $.get for some reason
+function isPositive(number){
+        var value = number;
+        if(number > 0){
+            value = number;
+        }
+        else{
+            value = 0;
+        }
+
+        // This does not work...
+        $.get("the_game.php",{Value:value});
+}
+
 function KeepBusyOneSecond(){
     var TodaysDate = new Date();
     var Seconds = TodaysDate.getTime();
