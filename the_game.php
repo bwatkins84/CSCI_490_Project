@@ -15,9 +15,9 @@
         <?php
             $Num = 4;
             //These are the two example functions to run the javascript functions
-            echo "<script type='text/javascript'> Printer('Testing123') </script>";
-            echo "<script type='text/javascript'> isPositive($Num) </script>";
-            $Value = $_GET['Value'];
-            echo $Value;
+            echo "<script type='text/javascript'> Printer($Num) </script>";
+            //echo "<script type='text/javascript'> isPositive($Num) </script>";
+            //$Value = $_GET['Value'];
+            //echo $Value;
         ?>
 </html>
