@@ -24,11 +24,133 @@
     <![endif]-->
 
     <script type="text/javascript">
-        function submitScore() {
-            alert('clicked');
+
+        var pausedFrame = null;
+        var latestFrame = null;
+        var winCount = 0;
+        var tieCount = 0;
+        /*
+            receives frames from the controller
+        */
+        var controller = new Leap.Controller({enableGestures: true});
+        controller.loop(function(frame) {
+            latestFrame = frame;
+            //document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
+        });
+
+        /*
+            returns the count of the fingers being held up
+        */
+        function getUserSybmbolCount() {
+            var fingerCount = latestFrame.pointables.length;
+
+            switch (fingerCount) {
+                case 0:
+                    return 1; // rock
+                case 1:
+                case 2:
+                case 3:
+                    return 3; // scissors
+                case 4:
+                case 5:
+                    return 2; // paper
+                default:
+                    return 1; // rock
+            }
+        }
+
+        /*
+            returns corresponding symbol
+        */
+        function getSymbol(num) {
+            switch (num) {
+                case 1:
+                    return "Rock";
+                case 2:
+                    return "Paper";
+                case 3:
+                    return "Scissors";
+                default:
+                    return "Error"
+            };
+        }
+
+        /*
+            checks game status
+        */
+        function gameStatus(player, cpu) {
+            // if win
+            if ((player == 1 && cpu == 3) || (player == 2 && cpu == 1) || (player == 3 && cpu == 2)) {
+                return 1;
+            }
+            // if tie
+            else if (player == cpu) {
+                return 0;
+            }
+            // if loss
+            else {
+                return -1;
+            }
+        }
+
+
+        window.onkeypress = function(e) {
+            //alert(e.charCode);
+            /*
+            if (e.charCode == 32) {
+                if (pausedFrame == null) {
+                    pausedFrame = latestFrame;
+                } else {
+                    pausedFrame = null;
+                }
+            }
+            */
+
+            // when 's' key is pressed
+            if (e.charCode == 115) {
+                // player Pane
+                document.getElementById('playerOptionPane').innerHTML = getSymbol(getUserSybmbolCount());
+
+                // computer Pane
+                var ranNum = Math.floor((Math.random()*3)+1);
+                document.getElementById('compOptionPane').innerHTML = getSymbol(ranNum)
+
+                var status = gameStatus(getUserSybmbolCount(), ranNum);
+
+                if (status >= 0) {
+                    // if not a loss
+                    (status == 0) ? tieCount++ : winCount++;
+                }
+                else {
+                    // if loss
+                    alert("WINS: " + winCount + " TIES: " + tieCount);
+                    winCount = 0;
+                    tieCount = 0;
+                }
+            }
+        };
+
+
+
+
+        //test button JS
+        $(document).ready(function() {
+           $('#inputForm').hide();
+        });
+
+        function endGame() {
+            $('#game').hide();
+            $('#inputForm').show();
             // make form dialog
 
             // submit name && score to ajax
+        }
+
+        function buttonSubmit() {
+
+
+
+            alert('submit pressed');
         }
 
     </script>
@@ -38,11 +160,29 @@
 
 <div class="container">
 
-    <h1 class="text-center">Play</h1>
+    <div id="game">
+        <h1 class="text-center">Play</h1>
 
-    <p>playing</p>
+        <div>
+            <h3>Player</h3>
+            <span id="playerOptionPane"></span>
+        </div>
 
-    <button onclick="submitScore()">sumbit score</button>
+        <div>
+            <h3>Computer</h3>
+            <span id="compOptionPane"></span>
+        </div>
+
+        <button onclick="endGame()">sumbit score</button>
+    </div>
+
+    <div id="inputForm">
+        <h1 class="text-center">Submit your score</h1>
+
+        <input type="text" placeholder="Name" name="name" />
+        <input type="button" onclick="buttonSubmit()" value="Submit"/>
+    </div>
+
 
 </div> <!-- /container -->
 

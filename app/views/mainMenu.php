@@ -29,6 +29,7 @@
 <div class="container">
 
     <h1 class="text-center">Rock Paper Scissors</h1>
+
     <a href="play" class="btn btn-primary btn-lg btn-block btn-success">Play</a>
     <a href="scoreboard" class="btn btn-primary btn-lg btn-block btn-info">Score Board</a>
 
