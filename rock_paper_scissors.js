@@ -4,6 +4,8 @@ var ThrownSelection = ["Rock","Scissors","Paper"];
 var controller = new Leap.Controller({enableGestures:true});
 var CurrentFrame;
 var CurrentGesture;
+var Timer;
+var Time = 3;
 
 controller.loop(function(frame){
    CurrentFrame = frame;
@@ -67,6 +69,7 @@ function KeepBusyThreeSeconds(){
     }
 }
 
+
 /**
  * @return {number}
  */
@@ -93,6 +96,51 @@ function PlayersThrows(){
         return Thrown.Rock;
     }
 }
+
+/***************************** Just Working on this Working ********************************/
+
+function GetPitch(){
+    var TheHandPos = CurrentFrame.hands[0].roll();
+    var fingerCount = CurrentFrame.pointables.length;
+
+    if((TheHandPos < 0.40 && TheHandPos > -0.40)){
+        if(fingerCount == 2){
+            document.getElementById('out3').innerHTML = "<div>" + "Scissors Thrown" + "</div>";
+            return 3; // Scissors
+        }
+        else{
+            document.getElementById('out3').innerHTML = "<div>" + "Paper Thrown" + "</div>";
+            return 2; // Paper
+        }
+    }else{
+        document.getElementById('out3').innerHTML = "<div>" + "Rock Thrown" + "</div>";
+        return 1; // Rock
+    }
+}
+
+
+function PlayGame(){
+    GetReadyToPlay();
+}
+
+function GetReadyToPlay(){
+    document.getElementById('out').innerHTML = "<div>" + "Get Ready to Play" + "</div>";
+    Timer = setInterval("CountDown()", 1000);
+};
+
+function CountDown(){
+    if(Time < 1){
+        clearInterval(Timer);
+        document.getElementById('out2').innerHTML = "<div>" + "Shot!" + "</div>";
+        Time = 3;
+        GetPitch();
+    }else{
+        document.getElementById('out2').innerHTML = "<div>" + Time + "</div>";
+        Time--;
+    }
+}
+
+/***************************** Just Working on this Working ********************************/
 
 /**
  * @return {boolean}
