@@ -131,6 +131,7 @@
          */
         function PlayGame(){
             if(!HandPresent()){
+                // TODO: make alert to display to insert hand
                 document.getElementById('Instructions').innerHTML = "Make Sure Your Hand is Over the Leap Motion";
                 document.getElementById('CountDown').innerHTML = "Click Play Game to Start Another Game";
                 return;
@@ -146,17 +147,45 @@
             var status = gameStatus(PlayerThrows, CPUThrows);
 
             if (status >= 0) {
-                // if not a loss
+                // if win
                 (status == 0) ? tieCount++ : winCount++;
             }
             else {
                 // if loss
+                /*
                 alert("WINS: " + winCount + " TIES: " + tieCount);
                 winCount = 0;
                 tieCount = 0;
+                */
+                endGame();
             }
         }
 
+        /*
+            exit the game
+         */
+        function endGame() {
+            // checks if player score is top score
+            $.ajax({
+                type: "GET",
+                url: "scoreboard/checkscore",
+                data: {
+                    score: winCount
+                }
+            }).fail(function(){
+                    alert('Server Error');
+            }).success(function(d){
+                if(d.topScore){
+                    // if player made topScore
+                    $('#game').hide();
+                    $('#inputForm').show();
+                }
+                else {
+                    // if player did NOT make topScore
+                    alert('did not make top Score. /n Score: ' + winCount);
+                }
+            });
+        }
 
 
         //test button JS
@@ -164,16 +193,8 @@
             $('#inputForm').hide();
         });
 
-        function endGame() {
-            $('#game').hide();
-            $('#inputForm').show();
-            // make form dialog
-
-            // submit name && score to ajax
-        }
-
         function buttonSubmit() {
-
+            // TODO: submit the score with the name to DB
 
 
             alert('submit pressed');
