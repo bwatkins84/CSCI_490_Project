@@ -9,8 +9,8 @@
 
     <title>Main Menu</title>
 
-    <script src="../app/script/jquery-1.10.2.js"></script>
-    <script src="../script/leap.min.js"></script>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../../script/leap.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
@@ -29,6 +29,9 @@
         var latestFrame = null;
         var winCount = 0;
         var tieCount = 0;
+        var Time = 3;
+        var Timer;
+
         /*
             receives frames from the controller
         */
@@ -39,25 +42,54 @@
         });
 
         /*
-            returns the count of the fingers being held up
+            Countdown to begin Game
         */
-        function getUserSybmbolCount() {
-            var fingerCount = latestFrame.pointables.length;
+        function GetReadyToPlay(){
+            document.getElementById('Instructions').innerHTML = "Get Ready to Play";
+            Timer = setInterval("CountDown()", 1000);
+        }
 
-            switch (fingerCount) {
-                case 0:
-                    return 1; // rock
-                case 1:
-                case 2:
-                case 3:
-                    return 3; // scissors
-                case 4:
-                case 5:
-                    return 2; // paper
-                default:
-                    return 1; // rock
+        function CountDown(){
+            if(Time < 1){
+                clearInterval(Timer);
+                document.getElementById('CountDown').innerHTML = "Shot!";
+                Time = 3;
+                PlayGame();
+            }else{
+                document.getElementById('CountDown').innerHTML = Time;
+                Time--;
             }
         }
+
+        /*
+            Checks to see if hand is over leap motion
+         */
+        function HandPresent(){
+            if(latestFrame.hands.length != 0){
+                return true;
+            }
+            return false;
+        }
+
+        /*
+            returns the count of the fingers being held up
+        */
+        function getUserSymbolCount() {
+            var TheHandPos = latestFrame.hands[0].roll();
+            var fingerCount = latestFrame.pointables.length;
+
+            if((TheHandPos < 0.40 && TheHandPos > -0.40)){
+                if(fingerCount == 2){
+                    return 3; // Scissors
+                 }
+                else{
+                    return 2; // Paper
+                }
+            }else{
+                return 1; // Rock
+            }
+        }
+
 
         /*
             returns corresponding symbol
@@ -94,42 +126,36 @@
         }
 
 
-        window.onkeypress = function(e) {
-            //alert(e.charCode);
-            /*
-            if (e.charCode == 32) {
-                if (pausedFrame == null) {
-                    pausedFrame = latestFrame;
-                } else {
-                    pausedFrame = null;
-                }
+        /*
+            The Game
+        */
+        function PlayGame(){
+            if(!HandPresent()){
+                document.getElementById('Instructions').innerHTML = "Make Sure Your Hand is Over the Leap Motion";
+                document.getElementById('CountDown').innerHTML = "Click Play Game to Start Another Game";
+                return;
             }
-            */
 
-            // when 's' key is pressed
-            if (e.charCode == 115) {
-                // player Pane
-                document.getElementById('playerOptionPane').innerHTML = getSymbol(getUserSybmbolCount());
+            var PlayerThrows = getUserSymbolCount();
+            var CPUThrows = Math.floor((Math.random()*3)+1);
+            document.getElementById('playerOptionPane').innerHTML = getSymbol(PlayerThrows);
 
-                // computer Pane
-                var ranNum = Math.floor((Math.random()*3)+1);
-                document.getElementById('compOptionPane').innerHTML = getSymbol(ranNum)
+            // computer Pane
+            document.getElementById('compOptionPane').innerHTML = getSymbol(CPUThrows);
 
-                var status = gameStatus(getUserSybmbolCount(), ranNum);
+            var status = gameStatus(PlayerThrows, CPUThrows);
 
-                if (status >= 0) {
-                    // if not a loss
-                    (status == 0) ? tieCount++ : winCount++;
-                }
-                else {
-                    // if loss
-                    alert("WINS: " + winCount + " TIES: " + tieCount);
-                    winCount = 0;
-                    tieCount = 0;
-                }
+            if (status >= 0) {
+                // if not a loss
+                (status == 0) ? tieCount++ : winCount++;
             }
-        };
-
+            else {
+                // if loss
+                alert("WINS: " + winCount + " TIES: " + tieCount);
+                winCount = 0;
+                tieCount = 0;
+            }
+        }
 
 
 
@@ -172,8 +198,9 @@
             <h3>Computer</h3>
             <span id="compOptionPane"></span>
         </div>
-
-        <button onclick="endGame()">sumbit score</button>
+        <div id="Instructions"></div>
+        <div id="CountDown"></div>
+        <button onclick="GetReadyToPlay()">Play Game</button><button onclick="endGame()">sumbit score</button>
     </div>
 
     <div id="inputForm">
