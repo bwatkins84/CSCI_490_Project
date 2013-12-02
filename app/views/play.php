@@ -9,18 +9,18 @@
 
     <title>Main Menu</title>
 
-    <script src="../app/script/jquery-1.10.2.js"></script>
+    <script src="../script/jquery-1.10.2.js"></script>
     <script src="../script/leap.min.js"></script>
     <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../bootstrap/examples/signin/signin.css" rel="stylesheet">
+    <link href="../../bootstrap/examples/signin/signin.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="../bootstrap/assets/js/html5shiv.js"></script>
-    <script src="../bootstrap/assets/js/respond.min.js"></script>
+    <script src="../../bootstrap/assets/js/html5shiv.js"></script>
+    <script src="../../bootstrap/assets/js/respond.min.js"></script>
     <![endif]-->
 
     <script type="text/javascript">
