@@ -9,8 +9,8 @@
 
     <title>Main Menu</title>
 
-    <script src="../app/script/jquery-1.10.2.js"></script>
-    <script src="../script/leap.min.js"></script>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../../script/leap.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
@@ -74,7 +74,7 @@
         /*
             returns the count of the fingers being held up
         */
-        function getUserSybmbolCount() {
+        function getUserSymbolCount() {
             var TheHandPos = latestFrame.hands[0].roll();
             var fingerCount = latestFrame.pointables.length;
 
@@ -89,6 +89,7 @@
                 return 1; // Rock
             }
         }
+
 
         /*
             returns corresponding symbol
@@ -135,13 +136,14 @@
                 return;
             }
 
-            document.getElementById('playerOptionPane').innerHTML = getSymbol(getUserSybmbolCount());
+            var PlayerThrows = getUserSymbolCount();
+            var CPUThrows = Math.floor((Math.random()*3)+1);
+            document.getElementById('playerOptionPane').innerHTML = getSymbol(PlayerThrows);
 
             // computer Pane
-            var ranNum = Math.floor((Math.random()*3)+1);
-            document.getElementById('compOptionPane').innerHTML = getSymbol(ranNum)
+            document.getElementById('compOptionPane').innerHTML = getSymbol(CPUThrows);
 
-            var status = gameStatus(getUserSybmbolCount(), ranNum);
+            var status = gameStatus(PlayerThrows, CPUThrows);
 
             if (status >= 0) {
                 // if not a loss
