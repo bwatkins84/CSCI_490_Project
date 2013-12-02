@@ -9,13 +9,13 @@
 
     <title>Main Menu</title>
 
-    <script src="../script/jquery-1.10.2.js"></script>
-    <script src="../script/leap.min.js"></script>
+    <script src="../app/script/jquery-1.10.2.js"></script>
+    <script src="../app/script/leap.min.js"></script>
     <!-- Bootstrap core CSS -->
-    <link href="../../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../../bootstrap/examples/signin/signin.css" rel="stylesheet">
+    <link href="../bootstrap/examples/signin/signin.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
