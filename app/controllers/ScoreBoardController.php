@@ -57,4 +57,17 @@ class ScoreBoardController extends BaseController {
         return Response::json($newScore);
     }
 
+    public function checkTopScore() {
+        // get input
+        $score = Input::get('score');
+
+        $count = Board::where('score', '>', $score)->count();
+        $count++;
+        return Response::json(array(
+            'score' => $score,
+            'position' => $count,
+            'topScore' => ($count < 10) ? true : false
+        ));
+    }
+
 }
