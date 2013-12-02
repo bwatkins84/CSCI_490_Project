@@ -9,13 +9,19 @@
 
     <title>Main Menu</title>
 
-    <script src="../app/script/jquery-1.10.2.js"></script>
-    <script src="../app/script/leap.min.js"></script>
+    <!-- <script src="../app/script/jquery-1.10.2.js"></script>
+    <script src="../app/script/leap.min.js"></script> -->
+
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/leap.min.js"></script>
+
     <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet"> -->
+    <link href="../../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../bootstrap/examples/signin/signin.css" rel="stylesheet">
+    <!-- <link href="../bootstrap/examples/signin/signin.css" rel="stylesheet">  -->
+    <link href="../../bootstrap/examples/signin/signin.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -131,8 +137,9 @@
          */
         function PlayGame(){
             if(!HandPresent()){
-                document.getElementById('Instructions').innerHTML = "Make Sure Your Hand is Over the Leap Motion";
-                document.getElementById('CountDown').innerHTML = "Click Play Game to Start Another Game";
+                alert(
+                    "Make Sure Your Hand is Over the Leap Motion\nClick Play Game to Start Another Game"
+                );
                 return;
             }
 
@@ -189,20 +196,23 @@
     <div id="game">
         <h1 class="text-center">Play</h1>
 
-        <div>
-            <h3>Player</h3>
-            <span id="playerOptionPane"></span>
+        <div class="text-center">
+
+                <h3>Player</h3>
+                <span id="playerOptionPane"></span>
+                <div id="Instructions"></div>
+                <div id="CountDown"></div>
+                <h3>Computer</h3>
+                <span id="compOptionPane"></span>
+
         </div>
 
-        <div>
-            <h3>Computer</h3>
-            <span id="compOptionPane"></span>
+        <div class="text-center">
+            <button onclick="GetReadyToPlay()">Play Game</button>
+            <button onclick="endGame()">sumbit score</button>
         </div>
-        <div id="Instructions"></div>
-        <div id="CountDown"></div>
-        <button onclick="GetReadyToPlay()">Play Game</button><button onclick="endGame()">sumbit score</button>
+
     </div>
-
     <div id="inputForm">
         <h1 class="text-center">Submit your score</h1>
 
