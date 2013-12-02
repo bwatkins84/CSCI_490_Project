@@ -9,8 +9,8 @@
 
     <title>Main Menu</title>
 
-    <script src="../script/jquery-1.10.2.js"></script>
-    <script src="../../script/leap.min.js"></script>
+    <script src="../app/script/jquery-1.10.2.js"></script>
+    <script src="../script/leap.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
@@ -33,8 +33,8 @@
         var Timer;
 
         /*
-            receives frames from the controller
-        */
+         receives frames from the controller
+         */
         var controller = new Leap.Controller({enableGestures: true});
         controller.loop(function(frame) {
             latestFrame = frame;
@@ -42,8 +42,8 @@
         });
 
         /*
-            Countdown to begin Game
-        */
+         Countdown to begin Game
+         */
         function GetReadyToPlay(){
             document.getElementById('Instructions').innerHTML = "Get Ready to Play";
             Timer = setInterval("CountDown()", 1000);
@@ -62,7 +62,7 @@
         }
 
         /*
-            Checks to see if hand is over leap motion
+         Checks to see if hand is over leap motion
          */
         function HandPresent(){
             if(latestFrame.hands.length != 0){
@@ -72,8 +72,8 @@
         }
 
         /*
-            returns the count of the fingers being held up
-        */
+         returns the count of the fingers being held up
+         */
         function getUserSymbolCount() {
             var TheHandPos = latestFrame.hands[0].roll();
             var fingerCount = latestFrame.pointables.length;
@@ -81,7 +81,7 @@
             if((TheHandPos < 0.40 && TheHandPos > -0.40)){
                 if(fingerCount == 2){
                     return 3; // Scissors
-                 }
+                }
                 else{
                     return 2; // Paper
                 }
@@ -92,8 +92,8 @@
 
 
         /*
-            returns corresponding symbol
-        */
+         returns corresponding symbol
+         */
         function getSymbol(num) {
             switch (num) {
                 case 1:
@@ -108,8 +108,8 @@
         }
 
         /*
-            checks game status
-        */
+         checks game status
+         */
         function gameStatus(player, cpu) {
             // if win
             if ((player == 1 && cpu == 3) || (player == 2 && cpu == 1) || (player == 3 && cpu == 2)) {
@@ -127,8 +127,8 @@
 
 
         /*
-            The Game
-        */
+         The Game
+         */
         function PlayGame(){
             if(!HandPresent()){
                 document.getElementById('Instructions').innerHTML = "Make Sure Your Hand is Over the Leap Motion";
@@ -161,7 +161,7 @@
 
         //test button JS
         $(document).ready(function() {
-           $('#inputForm').hide();
+            $('#inputForm').hide();
         });
 
         function endGame() {
