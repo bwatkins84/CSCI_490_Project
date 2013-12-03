@@ -25,10 +25,6 @@
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-    $('#playButton').removeAttr("disabled");
-})
-
     var pausedFrame = null;
     var latestFrame = null;
     var winCount = 0;
@@ -44,7 +40,19 @@ $(document).ready(function() {
     controller.loop(function(frame) {
         latestFrame = frame;
         //document.getElementById('out').innerHTML = (pausedFrame ? "<p><b>PAUSED</b></p>" : "") + "<div>"+(pausedFrame || latestFrame).dump()+"</div>";
-    });
+    })
+
+    // when the device is disconnected
+    controller.on('deviceConnected', function() {
+        $('#playButton').removeAttr("disabled");
+        document.getElementById('CountDown').innerHTML = "";
+    })
+
+    // when the device is connected
+    controller.on('deviceDisconnected', function() {
+        $('#playButton').attr("disabled", "disabled");
+        document.getElementById('CountDown').innerHTML = "Connect Device!";
+    })
 
     /*
      Countdown to begin Game
@@ -58,7 +66,7 @@ $(document).ready(function() {
     function CountDown(){
         if(Time < 1){
             clearInterval(Timer);
-            document.getElementById('CountDown').innerHTML = "Shot!";
+            document.getElementById('CountDown').innerHTML = "Shoot!";
             document.getElementById('Instructions').innerHTML = "Click \"Play\" to start";
             Time = 3;
             PlayGame();
@@ -268,7 +276,7 @@ $(document).ready(function() {
         </div>
 
         <div class="col-xs-6 col-md-4 text-center">
-            <h3>test score</h3>
+            <h3>Stats:</h3>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active">
                     <a href="#">
