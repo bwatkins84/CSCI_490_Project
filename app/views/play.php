@@ -45,7 +45,7 @@
      Countdown to begin Game
      */
     function GetReadyToPlay(){
-        document.getElementById('Instructions').innerHTML = "Get Ready to Play";
+        document.getElementById('Instructions').innerHTML = "Get Ready...";
         Timer = setInterval("CountDown()", 1000);
     }
 
@@ -53,6 +53,7 @@
         if(Time < 1){
             clearInterval(Timer);
             document.getElementById('CountDown').innerHTML = "Shot!";
+            document.getElementById('Instructions').innerHTML = "Click \"Play\" to start";
             Time = 3;
             PlayGame();
         }else{
@@ -132,8 +133,7 @@
     function PlayGame(){
         if(!HandPresent()){
             // TODO: make alert to display to insert hand
-            document.getElementById('Instructions').innerHTML = "Make Sure Your Hand is Over the Leap Motion";
-            document.getElementById('CountDown').innerHTML = "Click Play Game to Start Another Game";
+            alert("Make Sure Your Hand is Over the Leap Motion.");
             return;
         }
 
@@ -148,15 +148,13 @@
 
         if (status >= 0) {
             // if win
-            (status == 0) ? tieCount++ : winCount++;
+            (status == 0) ? tieCount++ : winCount++
+            document.getElementById('tieCount').innerHTML = tieCount;
+            document.getElementById('winCount').innerHTML = winCount;
         }
         else {
             // if loss
-            /*
-             alert("WINS: " + winCount + " TIES: " + tieCount);
-             winCount = 0;
-             tieCount = 0;
-             */
+            alert('You Lost!');
             endGame();
         }
     }
@@ -194,10 +192,23 @@
     });
 
     function buttonSubmit() {
-        // TODO: submit the score with the name to DB
+        $('#submitButton').attr("disabled", "disabled");
+        var name = document.getElementById("playerName").value;
 
+        $.ajax({
+            type: "GET",
+            url: "scoreboard/addscore",
+            data: {
+                name: name,
+                score: winCount
+            }
+        }).fail(function(){
+            alert('Server Error');
+        }).success(function(d){
+            // redirect to scoreboard
+            window.location.assign("scoreboard");
+        });
 
-        alert('submit pressed');
     }
 
 </script>
@@ -207,28 +218,58 @@
 
 <div class="container">
 
-    <div id="game">
+    <div class="row" id="game">
         <h1 class="text-center">Play</h1>
 
-        <div>
+        <div class="col-xs-6 col-md-4 text-center">
             <h3>Player</h3>
-            <span id="playerOptionPane"></span>
+
+            <img class="thumbnail" src="#" alt="Player Hand" style="min-height: 300px; min-width: 200px;">
+
+            <h2><span class="label label-default" id="playerOptionPane"></span></h2>
         </div>
 
-        <div>
-            <h3>Computer</h3>
-            <span id="compOptionPane"></span>
+        <div class="col-xs-6 col-md-4 text-center">
+            <h3>test score</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a href="#">
+                        <span id="winCount" class="badge pull-right">0</span>
+                        Wins:
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#">
+                        <span id="tieCount" class="badge pull-right">0</span>
+                        Ties:
+                    </a>
+                </li>
+            </ul>
+            <div id="Instructions" class="alert alert-info">Click "Play" to start</div>
+            <h1><div id="CountDown"></div></h1>
         </div>
-        <div id="Instructions"></div>
-        <div id="CountDown"></div>
-        <button onclick="GetReadyToPlay()">Play Game</button><button onclick="endGame()">sumbit score</button>
+
+        <div class="col-xs-6 col-md-4 text-center">
+            <h3>Computer</h3>
+
+            <img class="thumbnail" src="#" alt="CPU Hand" style="min-height: 300px; min-width: 200px;">
+
+            <h2><span class="label label-default" id="compOptionPane"></span></h2>
+
+        </div>
+
+
+        <div class="text-center" style="clear: both">
+            <button onclick="GetReadyToPlay()" class="btn btn-primary">Play Game</button><button onclick="endGame()" class="btn btn-info">Quit Game</button>
+        </div>
     </div>
+
 
     <div id="inputForm">
         <h1 class="text-center">Submit your score</h1>
 
-        <input type="text" placeholder="Name" name="name" />
-        <input type="button" onclick="buttonSubmit()" value="Submit"/>
+        <input type="text" placeholder="Name" id="playerName" />
+        <input type="button" onclick="buttonSubmit()" id="submitButton" value="Submit"/>
     </div>
 
 
