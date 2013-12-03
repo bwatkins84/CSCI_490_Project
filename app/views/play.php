@@ -25,12 +25,17 @@
 
 <script type="text/javascript">
 
+$(document).ready(function() {
+    $('#playButton').removeAttr("disabled");
+})
+
     var pausedFrame = null;
     var latestFrame = null;
     var winCount = 0;
     var tieCount = 0;
     var Time = 3;
     var Timer;
+
 
     /*
      receives frames from the controller
@@ -45,6 +50,7 @@
      Countdown to begin Game
      */
     function GetReadyToPlay(){
+        $('#playButton').attr("disabled", "disabled");
         document.getElementById('Instructions').innerHTML = "Get Ready...";
         Timer = setInterval("CountDown()", 1000);
     }
@@ -126,22 +132,53 @@
         }
     }
 
+    /*
+        change hand icon
+    */
+    function changePlayerIcon(num) {
+        switch(num) {
+            case 1:
+                document.getElementById('playerIcon').src='../app/images/rock.jpg';
+                break;
+            case 2:
+                document.getElementById('playerIcon').src='../app/images/paper.jpg';
+                break;
+            case 3:
+                document.getElementById('playerIcon').src='../app/images/scissors2.jpg';
+                break;
+        };
+    }
 
+    function changeCpuIcon(num) {
+        switch(num) {
+            case 1:
+                document.getElementById('cpuIcon').src='../app/images/rock.jpg';
+                break;
+            case 2:
+                document.getElementById('cpuIcon').src='../app/images/paper.jpg';
+                break;
+            case 3:
+                document.getElementById('cpuIcon').src='../app/images/scissors2.jpg';
+                break;
+        };
+    }
     /*
      The Game
      */
     function PlayGame(){
         if(!HandPresent()){
-            // TODO: make alert to display to insert hand
             alert("Make Sure Your Hand is Over the Leap Motion.");
+            $('#playButton').removeAttr("disabled");
             return;
         }
 
         var PlayerThrows = getUserSymbolCount();
         var CPUThrows = Math.floor((Math.random()*3)+1);
+        changePlayerIcon(PlayerThrows);
         document.getElementById('playerOptionPane').innerHTML = getSymbol(PlayerThrows);
 
         // computer Pane
+        changeCpuIcon(CPUThrows);
         document.getElementById('compOptionPane').innerHTML = getSymbol(CPUThrows);
 
         var status = gameStatus(PlayerThrows, CPUThrows);
@@ -151,6 +188,7 @@
             (status == 0) ? tieCount++ : winCount++
             document.getElementById('tieCount').innerHTML = tieCount;
             document.getElementById('winCount').innerHTML = winCount;
+            $('#playButton').removeAttr("disabled");
         }
         else {
             // if loss
@@ -224,7 +262,7 @@
         <div class="col-xs-6 col-md-4 text-center">
             <h3>Player</h3>
 
-            <img class="thumbnail" src="#" alt="Player Hand" style="min-height: 300px; min-width: 200px;">
+            <img id="playerIcon" class="img-thumbnail" src="../app/images/question_mark.jpg" alt="Player Hand" style="min-height: 225px; min-width: 225px;">
 
             <h2><span class="label label-default" id="playerOptionPane"></span></h2>
         </div>
@@ -252,7 +290,7 @@
         <div class="col-xs-6 col-md-4 text-center">
             <h3>Computer</h3>
 
-            <img class="thumbnail" src="#" alt="CPU Hand" style="min-height: 300px; min-width: 200px;">
+            <img id="cpuIcon" class="img-thumbnail" src="../app/images/question_mark.jpg" alt="CPU Hand" style="min-height: 225px; min-width: 225px;">
 
             <h2><span class="label label-default" id="compOptionPane"></span></h2>
 
@@ -260,7 +298,7 @@
 
 
         <div class="text-center" style="clear: both">
-            <button onclick="GetReadyToPlay()" class="btn btn-primary">Play Game</button><button onclick="endGame()" class="btn btn-info">Quit Game</button>
+            <button id="playButton" onclick="GetReadyToPlay()" class="btn btn-primary">Play Game</button><button id="quitButton" onclick="endGame()" class="btn btn-info">Quit Game</button>
         </div>
     </div>
 
